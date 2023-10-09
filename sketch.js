@@ -7,8 +7,8 @@ function preload() {
 }
 function setup() {
   new Canvas();
-  change()
   p1 = new Sprite(25, 25, 50, 50);
+    p1.rotation = 0;
   //pared izquierda
     wall= new Sprite (-50,300,100,4000,"static")
   wall.color =  "gray"
@@ -16,10 +16,10 @@ function setup() {
   wall= new Sprite (windowWidth+46,300,100,4000,"static")
   wall.color =  "gray"
   //techo
-  wallceiling= new Sprite (360,-6,800,10,"static")
+  wallceiling= new Sprite (windowWidth/2,-50,1277,100,"static")
     wallceiling.color =  "gray"
   //piso
-    wal= new Sprite (360,windowHeight+50,2000,100,"static")
+    wal= new Sprite (windowWidth/2,windowHeight+50,1277,100,"static")
     wall.color =  "gray"
 }
 
@@ -28,7 +28,6 @@ function draw() {
   movement();
   if (kb.pressing("q")) {
     movement();
-    change();
   }
 }
 function movement() {
@@ -46,8 +45,3 @@ function movement() {
   }
 }
 
-function change() {
-  if (kb.pressing("e")) {
-    //p1.addImage(sk1);
-  }
-}
