@@ -3,11 +3,11 @@ let wall, wallceiling, wallFloor, WallLeft, WallRight;
 let waterObstacle, fireObstacle, clouds, bolts,rocks;
 let non = "a"
 let habilities = [" ","agua", "fuego", "viento", "electricidad","tierra"]
-let currentOption = null;
 let windhuman, normalHuman;
 let waterObstacleimg,fireObstacleimg,cloudsimg,boltsimg,rocksimg;
 let character;
 let vida = 5;
+let bricks, tilesGroup;
 function preload() {
   windhuman = loadImage("./imgs/windhuman.png");
   normalHuman = loadImage("./imgs/human.png");
@@ -39,6 +39,34 @@ function setup() {
   Obstacle();
   p1.rotationLock = true;
   waterObstacle.rotationLock = true;
+
+
+
+
+	bricks = new Group();
+	bricks.w = 50;
+	bricks.h = 50;
+	bricks.tile = '=';
+
+	tilesGroup = new Tiles(
+		[
+			'=====...======',
+			'======..======',
+			'==..==..==....',
+			'==..==..==....',
+			'======..=====.',
+			'=====...======',
+			'==..........==',
+			'==..........==',
+			'==......======',
+			'==......=====.'
+		],
+		windowHeight,
+		windowWidth,
+		bricks.w + 1,
+		bricks.h + 1
+	);
+
 }
 
 function draw() {
@@ -79,7 +107,7 @@ function Obstacle() {
   let Wobs,Fobs,Cobs,Bobs,Robs;
 
   Wobs = new waterObstacle.Sprite(windowWidth / 2 + 500,random(0,windowHeight), 50);
-  Wobs.moveTowards(p1, 0.001);
+  
   Wobs.addImage(waterObstacleimg);
 
   // Fobs = new waterObstacle.Sprite(windowWidth / 2 + 500,random(0,windowHeight), 50);
@@ -102,26 +130,20 @@ function Obstacle() {
 function chamgeSkill() {
   text(habilities[0], p1.x - 18, p1.y - 30);
   if (kb.pressing("q")) {
-    //agua
-    text(habilities[1], p1.x - 18, p1.y - 30);
-    character = 1;
+    character = 1;//agua
   }
   if (kb.pressing("f")) {
-    //fuego
-    text(habilities[2], p1.x - 18, p1.y - 30);
-    character = 2;
+    character = 2;//fuego
   }
   if (kb.pressing("v")) {
-    //viento
-    text(habilities[3], p1.x - 18, p1.y - 30);
-    character = 3;
+    character = 3;//viento
     p1.addImage(windhuman);
   }
   if (kb.pressing("e")) {
-    //electricidad
-    text(habilities[4], p1.x - 27, p1.y - 30);
-    character = 4;
+
+    character = 4; //electricidad
   }
+  text(habilities[character], p1.x - 27, p1.y - 30);
 }
 
 function characterIteration() {
@@ -129,37 +151,14 @@ function characterIteration() {
   if (vida === 0) {
     p1.delete
   };
-  if(p1.collides(waterObstacle)){
-    if (character === 1) {
-    p1.overlaps(waterObstacle);
-  } else {
-    vida -= 1
-  } 
-  }
-  console.log(vida);
-  console.log(character);
+  if(p1.collides(waterObstacle) && character != 1){
+  vida -= 1
+  waterObstacle.collider='est'
+} else {
+  waterObstacle.collider='none'
 }
+ console.log(vida);
+  console.log(character);
 
-
-// if (kb.pressing("q")) {
-//   //agua
-//   text(habilities[0], p1.x - 18, p1.y - 30);
-//   character = 1;
-// }
-// if (kb.pressing("f")) {
-//   //fuego
-//   text(habilities[1], p1.x - 18, p1.y - 30);
-//   character = 2;
-// }
-// if (kb.pressing("v")) {
-//   //viento
-//   text(habilities[2], p1.x - 18, p1.y - 30);
-//   character = 3;
-//   p1.addImage(windhuman);
-// }
-// if (kb.pressing("e")) {
-//   //electricidad
-//   text(habilities[3], p1.x - 27, p1.y - 30);
-//   character = 4;
-// }
-// }
+};
+ 
