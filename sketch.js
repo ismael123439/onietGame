@@ -13,6 +13,7 @@ let windshots;
 let cooldown = true;
 let bullets;
 let rockObstacle;
+let floor;
 
 
 function preload() {
@@ -30,25 +31,24 @@ function preload() {
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
-
-  p1 = new Sprite(80, 80, 50, 50);
+  p1 = new Sprite(80, 790, 50, 50);
   p1.width = 50;
   p1.height = 50;
   p1.addImage(p1img);
   p1.rotation = 0;
+  floor = new Sprite(windowHeight,windowWidth,200,10);
 
+  // waterObstacle = new Sprite(350, 200, 100, 100)
+  // waterObstacle.collider = 'static'
 
-  waterObstacle = new Sprite(350, 200, 100, 100)
-  waterObstacle.collider = 'static'
+  // elecObstacle = new Sprite(200, 350, 100, 100)
+  // elecObstacle.collider = 'static'
 
-  elecObstacle = new Sprite(200, 350, 100, 100)
-  elecObstacle.collider = 'static'
+  // maderaObstacle = new Sprite(400, 200, 100, 100)//se quema con fu
+  // elecObstacle.collider = 'static'
 
-  maderaObstacle = new Sprite(400, 200, 100, 100)//se quema con fu
-  elecObstacle.collider = 'static'
-
-  rockObstacle = new Sprite(340, 210, 100, 100)
-  elecObstacle.collider = 'static'
+  // rockObstacle = new Sprite(340, 210, 100, 100)
+  // elecObstacle.collider = 'static'
 
 
   // shotsfire.life = 30;
@@ -64,9 +64,39 @@ function setup() {
   // windshots.rotation = 0;
   // windshots.collider = "estatic";
 
-  rockObstacle.overlaps(windshotsGroup, (rockObstacle, windshot) => {
-    rockObstacle.collider = 'dynamic';
-  });
+  // rockObstacle.overlaps(windshotsGroup, (rockObstacle, windshot) => {
+  //   rockObstacle.collider = 'dynamic';
+  // });
+
+  bricks = new Group();
+	bricks.w = 90;
+	bricks.h = 60;
+	bricks.tile = '=';
+  //bricks = "static"
+	tilesGroup = new Tiles(
+		[
+      '==========..========',
+			'=..................=',
+      '=..................=',
+			'===....=============',
+			'=..................=',
+			'=============..=====',
+      '=..................=',
+      '=..................=',
+			'==.=================',
+			'=..................=',
+      '=..................=',
+			'=============..=====',
+			'...................=',
+      '...................=',
+			'====================',
+		],
+		windowWidth / 3 -590,
+		windowHeight / 4 -230,
+		bricks.w + 4,
+		bricks.h + 4,
+    
+	);
 }
 
 function draw() {
@@ -139,31 +169,31 @@ function movement() {
     if (character == 2) {
       p1.addImage(p1fireUimg);
     }
-  } if (kb.presses("q") && cooldown == true) {
-    bullets = new Sprite(p1.x + 25, p1.y, 10, 4);
-    bullets.vel.x = -9;
-    cooldown = false;
-    setTimeout(function () {
-      cooldown = true;
-    }, 1000);
-  }
+  } 
+  // if (kb.presses("q") && cooldown == true) {
+  //   bullets = new Sprite(p1.x + 25, p1.y, 10, 4);
+  //   bullets.vel.x = -9;
+  //   cooldown = false;
+  //   setTimeout(function () {
+  //     cooldown = true;
+  //   }, 1000);
+  // }
 }
 function characterIteration() {
   if (vida === 0) {
     p1.remove();
   };
 
-  if (character == 1) {
-    if (p1.collides(waterObstacle) ) {
-      vida -= 1
-      waterObstacle.collider = 'static'
-    }
-  } else {
-    waterObstacle.collider = 'none'
-  }
+  // if (p1.collides(waterObstacle) ) {
+  //   if (character == 1) {
+  //     waterObstacle.collider = 'static'
+  //   }
+  // } else {
+  //   waterObstacle.collider = 'none'
+  // }
   
-  console.log(vida);
-  console.log(character);
+  // console.log(vida);
+  // console.log(character);
 }
 
 /*
