@@ -69,6 +69,12 @@ function setup() {
   // });
 
   bricks = new Group();
+  waterobs = new Group();
+  waterobs.w = 50;
+  waterobs.h = 50;
+  waterobs.tile ="w"
+  waterobs.vel.x = -2
+
 	bricks.w = 90;
 	bricks.h = 60;
 	bricks.tile = '=';
@@ -88,7 +94,7 @@ function setup() {
       '=..................=',
 			'=============..=====',
 			'...................=',
-      '...................=',
+      '................w..=',
 			'====================',
 		],
 		windowWidth / 3 -590,
