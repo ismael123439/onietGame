@@ -1,11 +1,11 @@
 let p1, Wobs;
-let waterObstacle, fireObstacle, clouds, bolts, rocks;
+let  fireObstacle, clouds, bolts, rocks;
 let non = "a"
 let habilities = [" ", "agua", "fuego", "viento", "electricidad", "tierra"]
 let currentOption = null;
 let windhuman, normalHuman;
 let waterObstacleimg, fireObstacleimg, cloudsimg, boltsimg, rocksimg, p1img, p1fireUimg, p1fireLimg, p1fireRimg, p1fireBimg, p1waterimg, p1elecimg;
-let character;
+let character = 0;
 let vida = 5;
 let bricks, tilesGroup;
 let shotsfire;
@@ -36,37 +36,8 @@ function setup() {
   p1.height = 50;
   p1.addImage(p1img);
   p1.rotation = 0;
+
   floor = new Sprite(windowHeight,windowWidth,200,10);
-
-  // waterObstacle = new Sprite(350, 200, 100, 100)
-  // waterObstacle.collider = 'static'
-
-  // elecObstacle = new Sprite(200, 350, 100, 100)
-  // elecObstacle.collider = 'static'
-
-  // maderaObstacle = new Sprite(400, 200, 100, 100)//se quema con fu
-  // elecObstacle.collider = 'static'
-
-  // rockObstacle = new Sprite(340, 210, 100, 100)
-  // elecObstacle.collider = 'static'
-
-
-  // shotsfire.life = 30;
-  // llamas shots.addAni();
-  // shotsfire.color = "#FF5722";
-  // shotsfire.rotation = 0;llamas
-  // shotsfire.collider = "estatic";
-
-
-  // //windshots.life = 30;
-  // viento shots.addAni();
-  // windshots.color = "#FF5722";
-  // windshots.rotation = 0;
-  // windshots.collider = "estatic";
-
-  // rockObstacle.overlaps(windshotsGroup, (rockObstacle, windshot) => {
-  //   rockObstacle.collider = 'dynamic';
-  // });
 
   bricks = new Group();
   waterobs = new Group();
@@ -78,7 +49,7 @@ function setup() {
 	bricks.w = 90;
 	bricks.h = 60;
 	bricks.tile = '=';
-  //bricks = "static"
+  bricks.collider = "static"
 	tilesGroup = new Tiles(
 		[
       '==========..========',
@@ -99,8 +70,8 @@ function setup() {
 		],
 		windowWidth / 3 -590,
 		windowHeight / 4 -230,
-		bricks.w + 4,
-		bricks.h + 4,
+		bricks.w,
+		bricks.h,
     
 	);
 }
@@ -110,7 +81,6 @@ function draw() {
   characterIteration();
   movement();
   changeCharacter();
-
 }
 
 
@@ -189,17 +159,20 @@ function characterIteration() {
   if (vida === 0) {
     p1.remove();
   };
-
-  // if (p1.collides(waterObstacle) ) {
-  //   if (character == 1) {
-  //     waterObstacle.collider = 'static'
-  //   }
-  // } else {
-  //   waterObstacle.collider = 'none'
-  // }
-  
-  // console.log(vida);
-  // console.log(character);
+  if (p1.overlap (waterobs)){
+if (character !== 1){
+  vida --;
+  waterobs.remove();
+}else{
+  waterobs.remove();
+}
+if (p1.y === windowHeight/2){
+  console.log("doug");
+  fireObstacle = new Sprite( p1.x,p1.y)
+}
+  }
+   console.log(vida);
+   console.log(character);
 }
 
 /*
