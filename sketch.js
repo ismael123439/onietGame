@@ -31,21 +31,24 @@ function preload() {
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
-  p1 = new Sprite(80, 790, 50, 50);
+  p1 = new Sprite(80, 790, 10, 30);
   p1.width = 50;
   p1.height = 50;
   p1.addImage(p1img);
-  p1.rotation = 0;
+  p1.rotationlock = "true";
+
+  fireObstacle = new Sprite(80,560,50,50);
+  fireObstacle.visible = false;
+ 
+  
 
   floor = new Sprite(windowHeight,windowWidth,200,10);
 
-  bricks = new Group();
-  waterobs = new Group();
-  waterobs.w = 50;
-  waterobs.h = 50;
-  waterobs.tile ="w"
-  waterobs.vel.x = -2
 
+  waterobs = new Sprite(windowWidth/2 +600,765,50,50);;
+  waterobs.vel.x = random(-5,-18);
+
+  bricks = new Group();
 	bricks.w = 90;
 	bricks.h = 60;
 	bricks.tile = '=';
@@ -65,7 +68,7 @@ function setup() {
       '=..................=',
 			'=============..=====',
 			'...................=',
-      '................w..=',
+      '...................=',
 			'====================',
 		],
 		windowWidth / 3 -590,
@@ -81,16 +84,12 @@ function draw() {
   characterIteration();
   movement();
   changeCharacter();
+ // console.log(p1.x)
+ text(vida,p1.x,p1.y)
 }
 
 
 function changeCharacter() {
-  if (kb.pressing("f")) {
-    //fire
-    text(habilities[2], p1.x - 18, p1.y - 30);
-    character = 2;
-    p1.addImage(p1fireUimg);
-  }
 
   if (kb.pressing("Shift")) {
     //humano
@@ -99,21 +98,27 @@ function changeCharacter() {
     p1.addImage(p1img);
   }
 
-  if (kb.pressing("r")) {
+  if (kb.pressing("1")) {
     //agua
     text(habilities[1], p1.x - 18, p1.y - 30);
     character = 1;
     p1.addImage(p1waterimg);
   }
+  if (kb.pressing("2")) {
+    //fuego
+    text(habilities[2], p1.x - 18, p1.y - 30);
+    character = 2;
+    p1.addImage(p1fireUimg);
+  }
 
-  if (kb.pressing("v")) {
+  if (kb.pressing("3")) {
     //viento
     text(habilities[3], p1.x - 18, p1.y - 30);
     character = 3;//viento
     p1.addImage(windhuman);
   }
 
-  if (kb.pressing("c")) {
+  if (kb.pressing("4")) {
     //electricidad
     text(habilities[4], p1.x - 27, p1.y - 30);
     character = 4;
@@ -166,11 +171,26 @@ if (character !== 1){
 }else{
   waterobs.remove();
 }
-if (p1.y === windowHeight/2){
-  console.log("doug");
-  fireObstacle = new Sprite( p1.x,p1.y)
+if (character == 2){
+  vida--;
+  vida--;
+  waterobs.remove();
 }
   }
+  if (p1.y < 630){
+    fireObstacle.visible = true;
+    fireObstacle.vel.x = random(5,18);
+  }
+  if (p1.overlap(fireObstacle)){
+    if (character !== 2){
+      vida --;
+      fireObstacle.remove();
+    }else{
+      fireObstacle.remove();
+    }
+  }
+
+
    console.log(vida);
    console.log(character);
 }
