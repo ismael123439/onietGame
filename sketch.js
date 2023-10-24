@@ -4,7 +4,7 @@ let non = "a"
 let habilities = [" ", "agua", "fuego", "viento", "electricidad", "tierra"]
 let currentOption = null;
 let windhuman, normalHuman;
-let waterObstacleimg, fireObstacleimg, cloudsimg, boltsimg, rocksimg, p1img, p1fireUimg, p1fireLimg, p1fireRimg, p1fireBimg, p1waterimg, p1elecimg;
+let waterObstacleimg, fireObstacleimg, cloudsimg, boltsimg, rocksimg, p1img, p1fireUimg, p1fireLimg, p1fireRimg, p1fireBimg, p1waterimg, p1elecimg, bricksImg;
 let character = 0;
 let vida = 5;
 let bricks, tilesGroup;
@@ -17,6 +17,7 @@ let floor;
 
 
 function preload() {
+  bricksImg = loadImage("./imgs/br.png")
   p1elecimg = loadImage("./imgs/electricidad/electricityUp.png")
   p1waterimg = loadImage("./imgs/water/waterUp.png")
   p1fireUimg = loadImage("./imgs/fire/firemanUp.png");
@@ -53,6 +54,7 @@ function setup() {
 	bricks.h = 60;
 	bricks.tile = '=';
   bricks.collider = "static"
+  bricks.addImage(bricksImg);
 	tilesGroup = new Tiles(
 		[
       '==========..========',
