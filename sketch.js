@@ -14,8 +14,9 @@ let cooldown = true;
 let bullets;
 let rockObstacle;
 let floor;
-let characterW = 40
-let characterH = 40
+let characterW = 60
+let characterH = 100
+let pausa = 1;
 
 
 function preload() {
@@ -37,11 +38,11 @@ function preload() {
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
-  p1 = new Sprite(80, 860, characterW, characterH);
+  p1 = new Sprite(windowWidth / 3 -590, 860, characterW, characterH);
   p1.addImage(p1img);
   p1.rotationlock = "true";
 
-  fireObstacle = new Sprite(100,windowHeight/2+20,70,70);
+  fireObstacle = new Sprite(windowWidth / 3 -380,windowHeight/2+20,70,70);
   fireObstacle.visible = false;
   fireObstacle.addImage(fireObstacleimg);
 
@@ -92,7 +93,13 @@ function draw() {
   movement();
   changeCharacter();
  // console.log(p1.x)
- text(vida,p1.x,p1.y)
+  text(vida,p1.x,p1.y)
+ 
+  // Pausar
+  if(kb.pressed('r') && pausa == 1){
+    noLoop();
+    pausa = 0;
+  }
 }
 
 
@@ -100,27 +107,23 @@ function changeCharacter() {
 
   if (kb.pressing("Shift")) {
     //humano
-    text(habilities[0], p1.x - 18, p1.y - 30);
     character = 0;
     p1.addImage(p1img);
   }
 
   if (kb.pressing("1")) {
     //agua
-    text(habilities[1], p1.x - 18, p1.y - 30);
     character = 1;
     p1.addImage(p1waterimg);
   }
   if (kb.pressing("2")) {
     //fuego
-    text(habilities[2], p1.x - 18, p1.y - 30);
     character = 2;
     p1.addImage(p1fireUimg);
   }
 
   if (kb.pressing("3")) {
     //viento
-    text(habilities[3], p1.x - 18, p1.y - 30);
     character = 3;//viento
     p1.addImage(cloudimg);
     characterW = 1;
@@ -129,7 +132,6 @@ function changeCharacter() {
 
   if (kb.pressing("4")) {
     //electricidad
-    text(habilities[4], p1.x - 27, p1.y - 30);
     character = 4;
     p1.addImage(p1elecimg);
   }
@@ -170,9 +172,10 @@ function movement() {
   // }
 }
 function characterIteration() {
-  text(vida,p1.x,p1.y);
-  if (vida === 0) {
-    p1.remove();
+  //text(vida,p1.x,p1.y-20);
+  if (vida <= 4) {
+    p1.x = windowWidth / 3 -590;
+    p1.y = 860;
   };
   if (p1.overlap (waterobs)){
 if (character !== 1){
@@ -208,7 +211,10 @@ if (character == 2){
    console.log(character);
 }
 
-/*
-  Links de cosas varias...
-  https://p5play.org/learn/tiles.html
-*/ 
+// Despausar
+function keyReleased() {
+  if (key == 'r' && pausa == 0) {
+    loop();
+    pausa = 1;
+  }
+}
