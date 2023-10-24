@@ -1,5 +1,5 @@
 let p1, Wobs;
-let  fireObstacle, clouds, bolts, rocks;
+let  waterobs,fireObstacle, clouds, bolts, rocks;
 let non = "a"
 let habilities = [" ", "agua", "fuego", "viento", "electricidad", "tierra"]
 let currentOption = null;
@@ -14,9 +14,13 @@ let cooldown = true;
 let bullets;
 let rockObstacle;
 let floor;
+let characterW = 10
+let characterH = 30
 
 
 function preload() {
+  fireObstacleimg = ("./imgs/obstacles/fireobs.png")
+  waterObstacleimg = ("./imgs/obstacles/waterobs.png")
   bricksImg = loadImage("./imgs/br.png")
   p1elecimg = loadImage("./imgs/electricidad/electricityUp.png")
   p1waterimg = loadImage("./imgs/water/waterUp.png")
@@ -32,22 +36,17 @@ function preload() {
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
-  p1 = new Sprite(80, 790, 10, 30);
-  p1.width = 50;
-  p1.height = 50;
+  p1 = new Sprite(80, 860, characterW, characterH);
   p1.addImage(p1img);
   p1.rotationlock = "true";
 
-  fireObstacle = new Sprite(80,560,50,50);
+  fireObstacle = new Sprite(100,windowHeight/2+20,50,50);
   fireObstacle.visible = false;
- 
-  
+  fireObstacle.addImage(fireObstacleimg);
 
-  floor = new Sprite(windowHeight,windowWidth,200,10);
-
-
-  waterobs = new Sprite(windowWidth/2 +600,765,50,50);;
+  waterobs = new Sprite(windowWidth/2 +600,860,50,50);
   waterobs.vel.x = random(-5,-18);
+  waterobs.addImage(waterObstacleimg);
 
   bricks = new Group();
 	bricks.w = 90;
@@ -55,6 +54,12 @@ function setup() {
 	bricks.tile = '=';
   bricks.collider = "static"
   bricks.addImage(bricksImg);
+
+  rocks= new Group();
+  rocks.w = 50;
+  rocks.h = 130;
+  rocks.tile = "r"
+  rocks.collider = "static"
 	tilesGroup = new Tiles(
 		[
       '==========..========',
@@ -64,7 +69,7 @@ function setup() {
 			'=..................=',
 			'=============..=====',
       '=..................=',
-      '=..................=',
+      '=..........r.......=',
 			'==.=================',
 			'=..................=',
       '=..................=',
@@ -76,8 +81,7 @@ function setup() {
 		windowWidth / 3 -590,
 		windowHeight / 4 -230,
 		bricks.w,
-		bricks.h,
-    
+		bricks.h, 
 	);
 }
 
@@ -117,7 +121,9 @@ function changeCharacter() {
     //viento
     text(habilities[3], p1.x - 18, p1.y - 30);
     character = 3;//viento
-    p1.addImage(windhuman);
+    //p1.addImage(windhuman);
+    characterW = 1;
+    characterH = 1;
   }
 
   if (kb.pressing("4")) {
@@ -130,25 +136,25 @@ function changeCharacter() {
 
 function movement() {
   if (kb.presses("left")) {
-    p1.x -= 50;
+    p1.x -= 20;
     if (character == 2) {
       p1.addImage(p1fireLimg);
     }
   }
   if (kb.presses("right")) {
-    p1.x += 50;
+    p1.x += 20;
     if (character == 2) {
       p1.addImage(p1fireRimg);
     }
   }
   if (kb.presses("up")) {
-    p1.y -= 50;
+    p1.y -= 20;
     if (character == 2) {
       p1.addImage(p1fireBimg);
     }
   }
   if (kb.presses("down")) {
-    p1.y += 50;
+    p1.y += 20;
     if (character == 2) {
       p1.addImage(p1fireUimg);
     }
@@ -163,6 +169,7 @@ function movement() {
   // }
 }
 function characterIteration() {
+  text(vida,p1.x,p1.y);
   if (vida === 0) {
     p1.remove();
   };
@@ -179,7 +186,7 @@ if (character == 2){
   waterobs.remove();
 }
   }
-  if (p1.y < 630){
+  if (p1.y < windowHeight/2+100){
     fireObstacle.visible = true;
     fireObstacle.vel.x = random(5,18);
   }
